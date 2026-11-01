@@ -119,18 +119,4 @@ Main Channel: Create it manually via the UI (Click + next to Channels -> Create 
 🔒 Security Notes
 Change default PostgreSQL passwords in docker-compose.yml.
 
-Keep your server and Docker images updated regularly (docker compose pull).
-
-text
-
----
-
-### 💡 Kaise Use Karein?
-1. Apne terminal mein project folder mein jayein: `cd ~/mattermost`
-2. File banayein: `nano README.md`
-3. Upar wala poora code (```markdown se ``` tak) copy karke terminal mein paste kar dein.
-4. Save karein: `Ctrl + O`, `Enter`, phir `Ctrl + X`.
-5. GitHub par push karein: `git add README.md`, `git commit -m "Added README"`, `git push`.
-
-Aapki file GitHub par ekdum professional aur detailed dikhegi! 🚀
-
+Keep your server and Docker images updated regularly (docker composose update)
