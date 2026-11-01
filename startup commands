@@ -1,0 +1,22 @@
+ssh root@185.193.17.177
+
+cd ~/mattermost
+
+
+docker compose up -d
+
+
+docker compose ps
+
+
+https://mattermost.mughalkhan1.online
+
+stop krnay ky liye: 
+
+ssh root@185.193.17.177
+
+cd ~/mattermost
+
+docker compose stop
+
+docker compose ps

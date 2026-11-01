@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:13-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mmuser
+      POSTGRES_PASSWORD: mmuser_password # Ise strong password se badlein
+      POSTGRES_DB: mattermost
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    networks:
+      - mm-network
+
+  mattermost:
+    image: mattermost/mattermost-team-edition:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      MM_SQLSETTINGS_DRIVERNAME: postgres
+      MM_SQLSETTINGS_DATASOURCE: "postgres://mmuser:mmuser_password@postgres:5432/mattermost?sslmode=disable&connect_timeout=10"
+      MM_SERVICESETTINGS_SITEURL: "https://mattermost.mughalkhan1.online"
+      MM_PLUGINSETTINGS_ENABLE: "true"
+      MM_PLUGINSETTINGS_ENABLEUPLOADS: "true"
+      MM_PLUGINSETTINGS_PLUGINSTATES: '{"com.mattermost.calls":{"Enable":true}}'
+    volumes:
+      - ./volumes/app/mattermost/config:/mattermost/config
+      - ./volumes/app/mattermost/data:/mattermost/data
+      - ./volumes/app/mattermost/logs:/mattermost/logs
+      - ./volumes/app/mattermost/plugins:/mattermost/plugins
+      - ./volumes/app/mattermost/client/plugins:/mattermost/client/plugins
+    ports:
+      - "12000:8065"     # Mattermost Web UI
+      - "12001:8443/udp" # Calls UDP (host 12001 -> container 8443)
+      - "12001:8443/tcp" # Calls TCP (fallback)
+    networks:
+      - mm-network
+
+  caddy:
+    image: caddy:2.11-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+    networks:
+      - mm-network
+
+networks:
+  mm-network:
+    driver: bridge

@@ -1,0 +1,9 @@
+{
+	"sans": [
+		"mattermost.mughalkhan1.online"
+	],
+	"issuer_data": {
+		"url": "https://acme-v02.api.letsencrypt.org/acme/cert/067ddccd1ec1cd56365c53ea85721608e86b",
+		"ca": "https://acme-v02.api.letsencrypt.org/directory"
+	}
+}
